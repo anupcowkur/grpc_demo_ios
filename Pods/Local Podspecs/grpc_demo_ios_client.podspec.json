@@ -1,0 +1,60 @@
+{
+  "name": "grpc_demo_ios_client",
+  "version": "0.0.1",
+  "license": "Apache License, Version 2.0",
+  "authors": {
+    "anup cowkur": "anupcowkur89@gmail.com"
+  },
+  "homepage": "https://github.com/anupcowkur/grpc_demo_ios",
+  "summary": "GRPC demo iOS",
+  "source": {
+    "git": "https://github.com/anupcowkur/grpc_demo_ios"
+  },
+  "platforms": {
+    "ios": "7.1",
+    "osx": "10.9"
+  },
+  "dependencies": {
+    "!ProtoCompiler-gRPCPlugin": [
+      "~> 1.0"
+    ]
+  },
+  "prepare_command": "mkdir -p Pods/grpc_demo_ios_client\nPods/!ProtoCompiler/protoc         --plugin=protoc-gen-grpc=Pods/!ProtoCompiler-gRPCPlugin/grpc_objective_c_plugin         --objc_out=Pods/grpc_demo_ios_client         --grpc_out=Pods/grpc_demo_ios_client         -I ./proto         -I Pods/!ProtoCompiler         ./proto/timer.proto",
+  "pod_target_xcconfig": {
+    "GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1",
+    "CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES": "YES"
+  },
+  "subspecs": [
+    {
+      "name": "Messages",
+      "source_files": [
+        "Pods/grpc_demo_ios_client/*.pbobjc.{h,m}",
+        "Pods/grpc_demo_ios_client/**/*.pbobjc.{h,m}"
+      ],
+      "header_mappings_dir": "Pods/grpc_demo_ios_client",
+      "requires_arc": false,
+      "dependencies": {
+        "Protobuf": [
+
+        ]
+      }
+    },
+    {
+      "name": "Services",
+      "source_files": [
+        "Pods/grpc_demo_ios_client/*.pbrpc.{h,m}",
+        "Pods/grpc_demo_ios_client/**/*.pbrpc.{h,m}"
+      ],
+      "header_mappings_dir": "Pods/grpc_demo_ios_client",
+      "requires_arc": true,
+      "dependencies": {
+        "gRPC-ProtoRPC": [
+
+        ],
+        "grpc_demo_ios_client/Messages": [
+
+        ]
+      }
+    }
+  ]
+}
